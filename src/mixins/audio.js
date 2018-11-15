@@ -18,8 +18,8 @@ const audioMixin = {
     stop() {
       this.backAudio.stop()
     },
-    seek() {
-      this.backAudio.seek()
+    seek(t) {
+      this.backAudio.seek(t)
     },
     update() {
       const { src, startTime, title, protocol, coverImgUrl } = this.audioConfig
@@ -34,9 +34,17 @@ const audioMixin = {
       this.bindEvent()
       this.backAudio.pause()
     },
+    _backAudioOnCanplay() {
+      this.duration = this.backAudio.duration
+    },
     _backAudioOnStop() {
       this.audioPlaying = false
-      this.audioConfig.loop && this.update()
+      console.log('131231313')
+      if (this.audioConfig.playTimeout) {
+        // this.seek(0)
+        // this.play()
+        this.update()
+      }
     },
     _backAudioOnPause() {
       this.audioPlaying = false
@@ -46,7 +54,7 @@ const audioMixin = {
     },
     _backAudioOnTimeUpdate() {
       const { audioConfig: { playTimeout }, audioPlayedTime } = this
-      this.currentTime = this.backAudio.currentTime
+      this.currentTime = parseFloat(this.backAudio.currentTime)
       if (typeof playTimeout === 'number' && audioPlayedTime > playTimeout) {
         this.stop()
       }
@@ -61,6 +69,7 @@ const audioMixin = {
       for (let i = 0; i < events.length; i++) {
         const event = events[i]
         const methodName = 'backAudio' + event.replace('o', 'O')
+        console.log(methodName)
         const method = this[methodName]
         const _method = this[`_${methodName}`]
         this.backAudio[event]((...args) => {
@@ -76,7 +85,7 @@ const audioMixin = {
   watch: {
     audioConfig(val) {
       this.audioPlayedTime = 0
-      console.log(val)
+      this.audioPlayTimer && clearInterval(this.audioPlayTimer)
       val.src && this.update()
     },
     audioPlaying(val) {

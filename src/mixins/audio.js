@@ -4,16 +4,23 @@ const audioMixin = {
       currentTime: 0,
       duration: 0,
       audioPlaying: false,
-      audioPlayedTime: 0,
-      audioConfig: {}
+      backAudioinited: false,
+      audioPlayedTime: 0
     }
   },
   methods: {
     play() {
-      this.backAudio.play()
+      if (!this.backAudioinited) {
+        this.update()
+      } else {
+        this.backAudio.play()
+      }
     },
     pause() {
       this.backAudio.pause()
+    },
+    toggle() {
+      this[this.audioPlaying ? 'pause' : 'play']()
     },
     stop() {
       this.backAudio.stop()
@@ -33,17 +40,22 @@ const audioMixin = {
       // Object.assign(this.backAudio, this.audioConfig)
       this.bindEvent()
       this.backAudio.pause()
+
+      this.backAudioinited = true
     },
-    _backAudioOnCanplay() {
-      this.duration = this.backAudio.duration
-    },
+    // _backAudioOnCanplay() {
+    //   this.duration = 52
+    // },
     _backAudioOnStop() {
       this.audioPlaying = false
-      console.log('131231313')
+      this.backAudioinited = false
+    },
+    _backAudioOnEnded() {
       if (this.audioConfig.playTimeout) {
-        // this.seek(0)
-        // this.play()
         this.update()
+      } else {
+        this.audioPlaying = false
+        this.backAudioinited = false
       }
     },
     _backAudioOnPause() {
@@ -54,7 +66,7 @@ const audioMixin = {
     },
     _backAudioOnTimeUpdate() {
       const { audioConfig: { playTimeout }, audioPlayedTime } = this
-      this.currentTime = parseFloat(this.backAudio.currentTime)
+      this.currentTime = Math.ceil(this.backAudio.currentTime)
       if (typeof playTimeout === 'number' && audioPlayedTime > playTimeout) {
         this.stop()
       }
@@ -69,7 +81,6 @@ const audioMixin = {
       for (let i = 0; i < events.length; i++) {
         const event = events[i]
         const methodName = 'backAudio' + event.replace('o', 'O')
-        console.log(methodName)
         const method = this[methodName]
         const _method = this[`_${methodName}`]
         this.backAudio[event]((...args) => {
@@ -83,10 +94,11 @@ const audioMixin = {
     this.stop()
   },
   watch: {
-    audioConfig(val) {
+    ['audioConfig.src'](val) {
       this.audioPlayedTime = 0
+      this.backAudioinited = false
       this.audioPlayTimer && clearInterval(this.audioPlayTimer)
-      val.src && this.update()
+      this.update()
     },
     audioPlaying(val) {
       if (val) {

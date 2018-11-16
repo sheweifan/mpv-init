@@ -4,7 +4,6 @@
     <button @click="playBackground">playBackground</button>
     <button @click="goToIndex2">go index2</button>
     <audio-range
-      :disabled="!duration"
       :max="duration"
       v-model="currentTime"
       @changing="rangeChange"
@@ -14,6 +13,8 @@
     <div>{{duration}}</div>
     <div>{{audioPlaying}}</div>
     <div>{{audioPlayedTime}}</div>
+    <button @click="play">播放</button>
+    <button @click="pause">暂停</button>
   </div>
 </template>
 
@@ -32,9 +33,10 @@ export default {
 
   data() {
     return {
-      duration: 0,
+      duration: 52,
       wocao: 0,
       wocao2: 0,
+      startPlay: 0,
       src: 'https://static-box1.xinli001.com/kc/static/mp3/liquid.mp3'
     }
   },
@@ -44,7 +46,7 @@ export default {
     let vidObj = {
       vid: vid,
       callback: (videoInfo) => {
-        this.videoSrc = videoInfo.src[0]
+        // this.videoSrc = videoInfo.src[0]
       }
     }
     polyv.getPreviewVideo(vidObj)
@@ -73,10 +75,26 @@ export default {
     },
     rangeChangeEnd(e) {
       const { detail: { value } } = e.mp
-      this.seek(value)
-      this.$nextTick(() => {
-        this.play()
-      })
+      if (this.backAudioinited) {
+        this.seek(value)
+        this.$nextTick(() => {
+          this.play()
+        })
+      } else {
+        this.currentTime = value
+      }
+    }
+  },
+
+  computed: {
+    audioConfig() {
+      let back = {}
+      back.startTime = this.currentTime
+      back.src = this.src
+      back.playTimeout = 100
+      back.title = '天天音乐'
+      back.coverImgUrl = 'https://striker.teambition.net/thumbnail/111858c824f0033f1009c5740bb5fc6b1b66/w/400/h/400'
+      return back
     }
   }
 }

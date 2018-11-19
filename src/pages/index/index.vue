@@ -13,22 +13,27 @@
     <div>{{duration}}</div>
     <div>{{audioPlaying}}</div>
     <div>{{audioPlayedTime}}</div>
-    <button @click="play">播放</button>
-    <button @click="pause">暂停</button>
+    <button @click="toggle">播放/暂停</button>
+    <div class="ehe">
+      <button @click="toggle2" class="tips">播放/暂停2</button>
+    </div>
+    <tips-mask>
+    </tips-mask>
   </div>
 </template>
 
 <script>
 import polyv from '@/utils/polyv.js'
-import mpNavbar from '@/components/navbar'
+import mpNavbar from '@/components/mp-navbar'
 import audioRange from '@/components/audio-range'
 import audioMixins from '@/mixins/audio'
+import tipsMask from '@/components/tips-mask'
 
 export default {
   mixins: [audioMixins],
 
   components: {
-    mpNavbar, audioRange
+    mpNavbar, audioRange, tipsMask
   },
 
   data() {
@@ -83,6 +88,11 @@ export default {
       } else {
         this.currentTime = value
       }
+    },
+    toggle2() {
+      this.src = `https://private.psy-1.com/music/meditation_breathe_plus-uoVmeHHPCGn7ngD6RxIS.mp3?e=1542108019&token=Wxe4Fvn8XfvDpkeUO0RVUj2Sz1E1KVi05wwZAr6x:u3kdzu4S1hGAEGrNyNnnrKExRdc=`
+      this.currentTime = 0
+      this.duration = 60 * 60 + 34
     }
   },
 
@@ -101,4 +111,14 @@ export default {
 </script>
 
 <style scoped>
+  .tips {
+    box-shadow: 0 0 9999px 99999px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 0 0 9999px 9999px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 999999;
+  }
+  .tips2{
+    position: relative;
+    transform: translate3d(0, 0, 0)
+  }
 </style>

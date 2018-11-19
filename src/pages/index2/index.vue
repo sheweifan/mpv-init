@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import navbar from '@/components/navbar'
+import mpNavbar from '@/components/mp-navbar'
 export default {
   components: {
-    'mp-navbar': navbar
+    mpNavbar
   },
   mounted() {}
 }

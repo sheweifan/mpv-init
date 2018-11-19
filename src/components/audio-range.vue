@@ -35,6 +35,7 @@ export default {
   methods: {
     bindchange(e) {
       const { detail: { value } } = e.mp
+      // 直接emit会导致闪烁...用个状态交换一下
       this.rangeValue = value
       this.$emit('change', e)
     },

@@ -14,11 +14,13 @@
     <div>{{audioPlaying}}</div>
     <div>{{audioPlayedTime}}</div>
     <button @click="toggle">播放/暂停</button>
-    <div class="ehe">
+    <div class="test">
+      <animate className="test-tips" :show="fuck" name="fadeInUp">
+        呵呵
+      </animate>
       <button @click="toggle2" class="tips">播放/暂停2</button>
     </div>
-    <tips-mask>
-    </tips-mask>
+    <tips-mask @click="hideFuck"></tips-mask>
   </div>
 </template>
 
@@ -28,12 +30,13 @@ import mpNavbar from '@/components/mp-navbar'
 import audioRange from '@/components/audio-range'
 import audioMixins from '@/mixins/audio'
 import tipsMask from '@/components/tips-mask'
+import animate from '@/components/animate'
 
 export default {
   mixins: [audioMixins],
 
   components: {
-    mpNavbar, audioRange, tipsMask
+    mpNavbar, audioRange, tipsMask, animate
   },
 
   data() {
@@ -42,6 +45,7 @@ export default {
       wocao: 0,
       wocao2: 0,
       startPlay: 0,
+      fuck: true,
       src: 'https://static-box1.xinli001.com/kc/static/mp3/liquid.mp3'
     }
   },
@@ -93,6 +97,9 @@ export default {
       this.src = `https://private.psy-1.com/music/meditation_breathe_plus-uoVmeHHPCGn7ngD6RxIS.mp3?e=1542108019&token=Wxe4Fvn8XfvDpkeUO0RVUj2Sz1E1KVi05wwZAr6x:u3kdzu4S1hGAEGrNyNnnrKExRdc=`
       this.currentTime = 0
       this.duration = 60 * 60 + 34
+    },
+    hideFuck() {
+      this.fuck = false
     }
   },
 
@@ -110,15 +117,36 @@ export default {
 }
 </script>
 
-<style scoped>
-  .tips {
+<style>
+  .test {
     box-shadow: 0 0 9999px 99999px rgba(0,0,0,0.4);
     -webkit-box-shadow: 0 0 9999px 9999px rgba(0,0,0,0.4);
     position: relative;
-    z-index: 999999;
+    z-index: 3;
   }
   .tips2{
     position: relative;
     transform: translate3d(0, 0, 0)
+  }
+  .test{
+    position: relative;
+  }
+
+  .test-tips{
+    position: absolute;
+    left: 10%;
+    bottom: 0%;
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+    width: 80%;
+    text-align: center;
+    background: #fff;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 </style>

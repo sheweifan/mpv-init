@@ -1,11 +1,16 @@
 <template>
-  <cover-view class="mask">
+  <cover-view class="mask" @click="handleClick">
     <slot></slot>
   </cover-view>
 </template>
 
 <script>
 export default {
+  methods: {
+    handleClick(e) {
+      this.$emit('click', e)
+    }
+  }
 }
 </script>
 
@@ -17,6 +22,6 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0);
-    z-index: 3;
+    z-index: 99999;
   }
 </style>

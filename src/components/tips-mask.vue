@@ -1,7 +1,7 @@
 <template>
-  <cover-view class="mask" @click="handleClick">
+  <div class="mask" @click="handleClick">
     <slot></slot>
-  </cover-view>
+  </div>
 </template>
 
 <script>

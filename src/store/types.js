@@ -1,1 +1,2 @@
 export const SET_STATUS_BAR_HEIGHT = `SET_STATUS_BAR_HEIGHT`
+export const SET_NETWORK = `SET_NETWORK`

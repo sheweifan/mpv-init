@@ -13,9 +13,9 @@ export default {
     },
     name: {
       type: String,
-      default: ''
+      default: 'fadeInUp'
     },
-    show: {
+    value: {
       type: Boolean,
       required: true
     }
@@ -23,9 +23,9 @@ export default {
   computed: {
     classNames() {
       let clsList = [this.className]
-      if (this.show) {
+      clsList.push(this.name)
+      if (this.value) {
         clsList.push('animated')
-        clsList.push(this.name)
       }
       return clsList.join(' ')
     }
@@ -34,5 +34,14 @@ export default {
 </script>
 
 <style lang="scss">
-  @import url('../style/animate.scss');
+.fadeInUp {
+  transition: transform 0.5s, opacity 0.5s;
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+
+  &.animated{
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
 </style>

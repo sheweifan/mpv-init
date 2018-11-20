@@ -1,4 +1,5 @@
 <template>
+<mp-layout>
   <div class="container">
     <mp-navbar />
     <button @click="playBackground">playBackground</button>
@@ -14,14 +15,19 @@
     <div>{{audioPlaying}}</div>
     <div>{{audioPlayedTime}}</div>
     <button @click="toggle">播放/暂停</button>
-    <div class="test">
-      <animate className="test-tips" :show="fuck" name="fadeInUp">
-        呵呵
-      </animate>
+    <intro :show="fuck === 1">
       <button @click="toggle2" class="tips">播放/暂停2</button>
-    </div>
-    <tips-mask @click="hideFuck"></tips-mask>
+    </intro>
+    <intro :show="fuck === 2">
+      <button @click="toggle2" class="tips">播放/暂停2</button>
+    </intro>
+    <intro :show="fuck === 3">
+      <button @click="toggle2" class="tips">播放/暂停2</button>
+    </intro>
+    <button @click="showIntro" class="tips">显示引导层</button>
+    <tips-mask @click="hideFuck" v-if="fuck > 0 && fuck < 4"></tips-mask>
   </div>
+</mp-layout>
 </template>
 
 <script>
@@ -31,12 +37,13 @@ import audioRange from '@/components/audio-range'
 import audioMixins from '@/mixins/audio'
 import tipsMask from '@/components/tips-mask'
 import animate from '@/components/animate'
+import intro from '@/components/intro'
 
 export default {
   mixins: [audioMixins],
 
   components: {
-    mpNavbar, audioRange, tipsMask, animate
+    mpNavbar, audioRange, tipsMask, animate, intro
   },
 
   data() {
@@ -45,7 +52,7 @@ export default {
       wocao: 0,
       wocao2: 0,
       startPlay: 0,
-      fuck: true,
+      fuck: 0,
       src: 'https://static-box1.xinli001.com/kc/static/mp3/liquid.mp3'
     }
   },
@@ -62,6 +69,9 @@ export default {
   },
 
   methods: {
+    showIntro() {
+      this.fuck = 1
+    },
     goToIndex2() {
       this.$router.push('/pages/index2/main?fuck=heheheheheh')
     },
@@ -99,7 +109,7 @@ export default {
       this.duration = 60 * 60 + 34
     },
     hideFuck() {
-      this.fuck = false
+      this.fuck++
     }
   },
 
@@ -118,35 +128,11 @@ export default {
 </script>
 
 <style>
-  .test {
-    box-shadow: 0 0 9999px 99999px rgba(0,0,0,0.4);
-    -webkit-box-shadow: 0 0 9999px 9999px rgba(0,0,0,0.4);
-    position: relative;
-    z-index: 3;
-  }
   .tips2{
     position: relative;
     transform: translate3d(0, 0, 0)
   }
   .test{
     position: relative;
-  }
-
-  .test-tips{
-    position: absolute;
-    left: 10%;
-    bottom: 0%;
-    opacity: 0;
-    transform: translate3d(0, 100%, 0);
-    width: 80%;
-    text-align: center;
-    background: #fff;
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
   }
 </style>

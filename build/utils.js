@@ -35,6 +35,13 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  var commonSassLoader = {
+    loader: 'sass-resources-loader',
+      options: {
+        resources: [path.resolve(__dirname, '../src/style/common.scss')]  
+      }
+  }
+
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     var loaders = [cssLoader, px2rpxLoader, postcssLoader]
@@ -45,6 +52,10 @@ exports.cssLoaders = function (options) {
           sourceMap: options.sourceMap
         })
       })
+    }
+    
+    if (loader === 'sass' || loader === 'scss') {
+      loaders.push(commonSassLoader)
     }
 
     // Extract CSS when that option is specified

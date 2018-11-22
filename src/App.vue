@@ -7,4 +7,5 @@ export default {
 
 <style lang="scss">
   @import './style/animate.scss';
+  @import './style/iconfont/iconfont.css';
 </style>

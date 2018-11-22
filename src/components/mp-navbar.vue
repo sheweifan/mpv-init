@@ -80,7 +80,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    background: #fff;
+    background: transparent;
 
     .left,
     .right,

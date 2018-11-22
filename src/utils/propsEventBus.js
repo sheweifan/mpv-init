@@ -1,4 +1,5 @@
 // 这个是用来解决小程序内状态不接受function的问题
+// 暂废弃，用vuex解决
 const random = () => Symbol(new Date().getTime())
 
 class PropsEventBus {

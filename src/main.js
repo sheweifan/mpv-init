@@ -5,6 +5,7 @@ import router from './router'
 import globalMixins from '@/mixins/global'
 import mpLayout from '@/components/mp-layout'
 import mpDialog from '@/components/mp-dialog'
+import mpNavbar from '@/components/mp-navbar'
 // import propsEventBusCreator from '@/utils/PropsEventBus'
 
 store.dispatch('updateStatusBarHeight')
@@ -20,6 +21,7 @@ App.mpType = 'app'
 Vue.mixin(globalMixins)
 Vue.component('mp-layout', mpLayout)
 Vue.component('mp-dialog', mpDialog)
+Vue.component('mp-navbar', mpNavbar)
 // Vue.prototype.$propsEventBus = propsEventBusCreator()
 
 const app = new Vue(App)

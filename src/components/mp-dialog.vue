@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mask v-if="dialogConfig.isShow" @click="close"/>
+    <mask v-if="dialogConfig.isShow" @click="_onClose"/>
     <div :class="classNames">
       <div class="title">{{ dialogConfig.title }}</div>
       <div class="btns">
@@ -27,6 +27,9 @@ export default {
     _onComfirm() {
       this._handle('comfirm')
     },
+    _onClose() {
+      this._handle('close')
+    },
     _handle(type) {
       const { handle } = this.dialogConfig
       if (typeof handle === 'function') {
@@ -45,8 +48,8 @@ export default {
   computed: {
     ...mapState(['dialogConfig']),
     classNames() {
-      let clsList = ['mp-dialog-context', 'fadeInUp']
-      if (this.dialogConfig) {
+      let clsList = ['mp-dialog-context', 'zoomIn']
+      if (this.dialogConfig.isShow) {
         clsList.push('animated')
       }
       return clsList.join(' ')

@@ -82,7 +82,8 @@ export default {
     handleDialog() {
       this.showDialog({
         title: '呵呵飒飒大苏打xxxxxx',
-        onCancel: () => {
+        handle: e => {
+          console.log(e)
         }
       })
     },

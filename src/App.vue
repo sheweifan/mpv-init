@@ -4,3 +4,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  @import './style/animate.scss';
+</style>

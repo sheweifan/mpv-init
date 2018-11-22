@@ -69,7 +69,7 @@ export default {
 <style scoped lang="scss">
   .header-layout{
     position: relative;
-    z-index: 1;
+    z-index: $navbarZIndex;
   }
   .header{
     position: fixed;

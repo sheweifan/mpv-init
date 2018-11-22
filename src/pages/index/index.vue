@@ -15,35 +15,41 @@
     <div>{{audioPlaying}}</div>
     <div>{{audioPlayedTime}}</div>
     <button @click="toggle">播放/暂停</button>
-    <intro :show="fuck === 1">
+    <intro :show="fuck === 1" text="fuck1">
       <button @click="toggle2" class="tips">播放/暂停2</button>
     </intro>
-    <intro :show="fuck === 2">
+    <intro :show="fuck === 2" text="fuck2">
       <button @click="toggle2" class="tips">播放/暂停2</button>
     </intro>
-    <intro :show="fuck === 3">
+    <intro :show="fuck === 3" text="fuck3">
       <button @click="toggle2" class="tips">播放/暂停2</button>
     </intro>
     <button @click="showIntro" class="tips">显示引导层</button>
+    <button @click="handleUpModel" class="tips">显示向上弹起的模态框</button>
+    <button @click="handleDialog">dialog</button>
     <tips-mask @click="hideFuck" v-if="fuck > 0 && fuck < 4"></tips-mask>
+    <up-model v-model="showUpModel">
+      <div>xxxxxxxxxxxxxxxx1312313123</div>
+    </up-model>
+    <mp-dialog />
   </div>
 </mp-layout>
 </template>
 
 <script>
-import polyv from '@/utils/polyv.js'
+// import polyv from '@/utils/polyv.js'
 import mpNavbar from '@/components/mp-navbar'
 import audioRange from '@/components/audio-range'
 import audioMixins from '@/mixins/audio'
 import tipsMask from '@/components/tips-mask'
 import animate from '@/components/animate'
 import intro from '@/components/intro'
-
+import upModel from '@/components/up-model'
 export default {
   mixins: [audioMixins],
 
   components: {
-    mpNavbar, audioRange, tipsMask, animate, intro
+    mpNavbar, audioRange, tipsMask, animate, intro, upModel
   },
 
   data() {
@@ -53,22 +59,33 @@ export default {
       wocao2: 0,
       startPlay: 0,
       fuck: 0,
+      showUpModel: false,
       src: 'https://static-box1.xinli001.com/kc/static/mp3/liquid.mp3'
     }
   },
 
   created() {
-    let vid = '605ea32beef6f389e595fee5ac24b9ad_6'
-    let vidObj = {
-      vid: vid,
-      callback: (videoInfo) => {
-        // this.videoSrc = videoInfo.src[0]
-      }
-    }
-    polyv.getPreviewVideo(vidObj)
+    // let vid = '605ea32beef6f389e595fee5ac24b9ad_6'
+    // let vidObj = {
+    //   vid: vid,
+    //   callback: (videoInfo) => {
+    //     // this.videoSrc = videoInfo.src[0]
+    //   }
+    // }
+    // polyv.getPreviewVideo(vidObj)
   },
 
   methods: {
+    handleUpModel() {
+      this.showUpModel = true
+    },
+    handleDialog() {
+      this.showDialog({
+        title: '呵呵飒飒大苏打xxxxxx',
+        onCancel: () => {
+        }
+      })
+    },
     showIntro() {
       this.fuck = 1
     },

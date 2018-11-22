@@ -20,6 +20,11 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      isMounted: true
+    }
+  },
   computed: {
     classNames() {
       let clsList = [this.className]
@@ -34,14 +39,4 @@ export default {
 </script>
 
 <style lang="scss">
-.fadeInUp {
-  transition: transform 0.5s, opacity 0.5s;
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-
-  &.animated{
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-}
 </style>

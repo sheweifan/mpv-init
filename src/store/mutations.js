@@ -9,5 +9,8 @@ export default {
       state.hasNetwork = status.isConnected
     }
     state.networkType = status.networkType
+  },
+  [types.SET_DIALOG](state, config) {
+    state.dialogConfig = config
   }
 }

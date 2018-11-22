@@ -17,5 +17,8 @@ export default {
     wx.onNetworkStatusChange(e => {
       commit(types.SET_NETWORK, e)
     })
+  },
+  setDialog({commit}, config) {
+    commit(types.SET_DIALOG, config)
   }
 }

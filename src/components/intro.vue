@@ -1,8 +1,8 @@
 <template>
   <div :class="clasNames">
     <slot />
-    <animate v-if="isMounted" className="test-tips" v-model="show">
-      hehe
+    <animate className="test-tips" v-model="show">
+      {{ text }}
     </animate>
   </div>
 </template>
@@ -21,15 +21,10 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    text: {
+      type: String
     }
-  },
-  data() {
-    return {
-      isMounted: false
-    }
-  },
-  mounted() {
-    this.isMounted = true
   },
   computed: {
     clasNames() {

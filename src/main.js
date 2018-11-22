@@ -4,6 +4,8 @@ import store from './store'
 import router from './router'
 import globalMixins from '@/mixins/global'
 import mpLayout from '@/components/mp-layout'
+import mpDialog from '@/components/mp-dialog'
+// import propsEventBusCreator from '@/utils/PropsEventBus'
 
 store.dispatch('updateStatusBarHeight')
 store.dispatch('setNetworkStatusLinster')
@@ -17,6 +19,8 @@ App.mpType = 'app'
 
 Vue.mixin(globalMixins)
 Vue.component('mp-layout', mpLayout)
+Vue.component('mp-dialog', mpDialog)
+// Vue.prototype.$propsEventBus = propsEventBusCreator()
 
 const app = new Vue(App)
 app.$mount()

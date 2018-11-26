@@ -1,6 +1,8 @@
 <template>
-  <div :class="classNames">
-    <slot />
+  <div :class="classNames" v-show="isMounted">
+    <!-- <template > -->
+      <slot />
+    <!-- </template> -->
   </div>
 </template>
 
@@ -22,17 +24,25 @@ export default {
   },
   data() {
     return {
-      isMounted: true
+      isMounted: false
+    }
+  },
+  mounted() {
+    this.isMounted = true
+  },
+  methods: {
+    getClassNames() {
+      let clsList = [this.className]
+      clsList.push(this.name)
+      if (this.value && this.isMounted) {
+        clsList.push('animated')
+      }
+      return clsList.join(' ')
     }
   },
   computed: {
     classNames() {
-      let clsList = [this.className]
-      clsList.push(this.name)
-      if (this.value) {
-        clsList.push('animated')
-      }
-      return clsList.join(' ')
+      return this.getClassNames()
     }
   }
 }
